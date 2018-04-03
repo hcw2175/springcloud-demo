@@ -6,8 +6,10 @@ cd $scriptPath
 cd ../../
 
 # Docker容器基本信息
+appHome="/home/hucw/springcloud"
 dockerName="productservice"
 dockerPort="2200"
+dockerJarVolumn="${appHome}/${dockerName}"
 
 # 编译打包
 mvn clean package
@@ -22,14 +24,11 @@ mkdir ${outputPath} && mkdir ${outputPath}/jar
 cp ./target/*.jar ${outputPath}/jar/app.jar
 
 # 整个目录复制到应用目录中
-appHome="/home/hucw/springcloud"
+
 cd ${scriptPath}
 
-cp -rf ./${outputPath} ${appHome}
+cp -rf ${outputPath} ${appHome}
 
-
-# 挂住路径建议为绝对路径
-dockerJarVolumn="${appHome}/${dockerName}"
 
 # 停止删除现有容器
 echo "停止删除容器：${dockerName}"
